@@ -6,7 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function ReactionView({ reaction, onDelete }) {
+export default function ReactionView({ reaction, onDelete, index }) {
   const selectedMood = moods.find(mood => mood.value === reaction.mood?.value)
  return (
   <div className="overflow-hidden text-white py-4 px-5 w-[300px] shadow-lg rounded-lg bg-gray-900 focus-within:border-indigo-700 focus-within:ring-1 focus-within:ring-indigo-700">
@@ -14,7 +14,7 @@ export default function ReactionView({ reaction, onDelete }) {
       <p className="font-semibold text-base mb-3">
       {reaction.user}
       </p>
-      <button type="button" onClick={() => onDelete(reaction.value)}>
+      <button type="button" onClick={() => onDelete(index)}>
         <TrashIcon
             className="h-5 w-5 text-indigo-700 hover:text-indigo-800"
             aria-hidden="true"

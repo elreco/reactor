@@ -47,10 +47,9 @@ export default function Reactor({ children }) {
     setTimeout(() => setUser(''), 250)
   }
 
-  const handleDeleteReaction = (reactionValue) => {
+  const handleDeleteReaction = (index) => {
     let reactionsArray = [...reactions]
-    const reactionToDelete = reactions.findIndex((reaction) => reaction.value = reactionValue)
-    reactionsArray.splice(reactionToDelete, 1)
+    reactionsArray.splice(index, 1)
     setReactions(reactionsArray)
   }
 
@@ -110,7 +109,7 @@ export default function Reactor({ children }) {
 
                 {({ close }) => (
                   <div className="absolute left-9 -top-9 ml-5">
-                      <ReactionView reaction={reaction} onDelete={(data) => {
+                      <ReactionView index={index} reaction={reaction} onDelete={(data) => {
                         handleDeleteReaction(data)
                         close()
                       }} />
