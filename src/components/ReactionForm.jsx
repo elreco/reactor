@@ -1,5 +1,4 @@
-import React from 'react'
-import { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { FaceSmileIcon } from '@heroicons/react/20/solid'
 import { Listbox, Transition } from '@headlessui/react'
 import Avatar from './Avatar'
@@ -37,6 +36,7 @@ export default function ReactionForm({ onSubmit }) {
               Add your comment
             </label>
             <textarea
+              autoFocus
               rows={3}
               name="comment"
               id="comment"
@@ -46,9 +46,7 @@ export default function ReactionForm({ onSubmit }) {
               defaultValue={''}
             ></textarea>
 
-            {/* Spacer element to match the height of the toolbar */}
             <div className="py-2" aria-hidden="true">
-              {/* Matches height of button in toolbar (1px border + 36px content height) */}
               <div className="py-px">
                 <div className="h-9" />
               </div>

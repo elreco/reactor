@@ -1,23 +1,27 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
-import { useLocalStorage } from "react-use";
-import { Transition, Popover } from "@headlessui/react";
-import Widget from "./Widget";
-import ReactionForm from "./ReactionForm";
-import ReactionView from "./ReactionView";
-import Avatar from "./Avatar";
+import React, { useEffect, useState, useRef } from "react"
+import { useLocalStorage } from "usehooks-ts"
+import { Transition, Popover } from "@headlessui/react"
+import Widget from "./Widget"
+import ReactionForm from "./ReactionForm"
+import ReactionView from "./ReactionView"
+import Avatar from "./Avatar"
+import Modal from './Modal'
+import UserForm from "./UserForm"
 
 export default function Reactor({ children }) {
   const [isEditionMode, setIsEditionMode] = useState(false);
   const [isFormActive, setIsFormActive] = useState(false);
+  const [isUserFormActive, setUserFormActive] = useState(false);
   const [formPosition, setFormPosition] = useState({ left: 0, top: 0 });
   const [reactions, setReactions] = useLocalStorage("reactor:reactions", []);
-  const [user] = useLocalStorage("reactor:user", "");
+  const [user, setUser] = useLocalStorage("reactor:user", "");
 
   const contentRef = useRef();
   const formRef = useRef();
 
-  const toggleEditionMode = () => setIsEditionMode(!isEditionMode);
+  const toggleEditionMode = () => setIsEditionMode(!isEditionMode)
+
+  const toggleUserForm = () => setUserFormActive(!isUserFormActive)
 
   const handlePostReaction = (data) => {
     setReactions([
@@ -30,11 +34,27 @@ export default function Reactor({ children }) {
         comment: data.comment,
       },
     ]);
-    setIsFormActive(false);
-  };
+    setIsFormActive(false)
+  }
+
+  const handleUserForm = (data) => {
+    setUserFormActive(false)
+    setTimeout(() => setUser(data.pseudo), 250)
+  }
+
+  const handleLogout = () => {
+    setUserFormActive(false)
+    setTimeout(() => setUser(''), 250)
+  }
+
+  const handleDeleteReaction = (reactionValue) => {
+    let reactionsArray = [...reactions]
+    const reactionToDelete = reactions.findIndex((reaction) => reaction.value = reactionValue)
+    reactionsArray.splice(reactionToDelete, 1)
+    setReactions(reactionsArray)
+  }
 
   const toggleForm = (e) => {
-
     setFormPosition({
       left: e.pageX,
       top: e.pageY,
@@ -54,11 +74,13 @@ export default function Reactor({ children }) {
 
     return () => contentRef?.current?.removeEventListener("click", toggleForm);
   }, [isEditionMode, isFormActive]);
+
   return (
     <div className="relative">
       <div className="fixed bottom-0 m-5 flex justify-center w-full">
         <Widget
           onToggleEditionMode={toggleEditionMode}
+          onClickProfile={toggleUserForm}
           isEditionMode={isEditionMode}
         />
       </div>
@@ -85,9 +107,16 @@ export default function Reactor({ children }) {
                 leaveTo="opacity-0"
               >
                 <Popover.Panel>
+
+                {({ close }) => (
                   <div className="absolute left-9 -top-9 ml-5">
-                    <ReactionView reaction={reaction} />
+                      <ReactionView reaction={reaction} onDelete={(data) => {
+                        handleDeleteReaction(data)
+                        close()
+                      }} />
                   </div>
+
+                  )}
                 </Popover.Panel>
               </Transition>
             </Popover>
@@ -123,6 +152,9 @@ export default function Reactor({ children }) {
           {children}
         </div>
       </div>
+      <Modal open={isUserFormActive} setOpen={setUserFormActive}>
+          <UserForm onSubmit={handleUserForm} onLogout={handleLogout} />
+      </Modal>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import {
   CheckIcon,
 } from "@heroicons/react/20/solid"
 import Avatar from "./Avatar"
-import { useLocalStorage } from "react-use"
+import { useLocalStorage } from "usehooks-ts"
 
 export default function Widget({
   onToggleEditionMode,
@@ -12,6 +12,7 @@ export default function Widget({
   isEditionMode,
 }) {
   const [user] = useLocalStorage('reactor:user', '')
+
   return (
     <div className="inline-flex items-center rounded-md shadow-sm z-[9999]">
       {user && <button
