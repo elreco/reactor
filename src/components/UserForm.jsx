@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import React, { useState } from "react"
+import { useLocalStorage } from "usehooks-ts"
 
 export default function UserForm({ onSubmit, onLogout }) {
   const [user] = useLocalStorage("reactor:user", "");
@@ -25,6 +25,7 @@ export default function UserForm({ onSubmit, onLogout }) {
           name="pseudo"
           autoFocus
           id="pseudo"
+          required
           value={pseudo}
           onChange={(event) => setPseudo(event.target.value)}
           className="block w-full rounded-md p-3 border-gray-300 shadow-sm border outline-none focus:border-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

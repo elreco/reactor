@@ -9,12 +9,12 @@ import Modal from './Modal'
 import UserForm from "./UserForm"
 
 export default function Reactor({ children }) {
-  const [isEditionMode, setIsEditionMode] = useState(false);
-  const [isFormActive, setIsFormActive] = useState(false);
-  const [isUserFormActive, setUserFormActive] = useState(false);
-  const [formPosition, setFormPosition] = useState({ left: 0, top: 0 });
-  const [reactions, setReactions] = useLocalStorage("reactor:reactions", []);
-  const [user, setUser] = useLocalStorage("reactor:user", "");
+  const [isEditionMode, setIsEditionMode] = useState(false)
+  const [isFormActive, setIsFormActive] = useState(false)
+  const [isUserFormActive, setUserFormActive] = useState(false)
+  const [formPosition, setFormPosition] = useState({ left: 0, top: 0 })
+  const [reactions, setReactions] = useLocalStorage("reactor:reactions", [])
+  const [user, setUser] = useLocalStorage("reactor:user", "")
 
   const contentRef = useRef();
   const formRef = useRef();
