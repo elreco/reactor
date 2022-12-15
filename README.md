@@ -12,6 +12,8 @@ https://youtu.be/Db9t-3pCrQo
 
 - `npm run dev`
 
+## Usage
+
 ```jsx
 import Reactor from './components/Reactor'
 
