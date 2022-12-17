@@ -140,7 +140,7 @@ export default function Reactor({ children }) {
       <div
         ref={contentRef}
         className={
-          isEditionMode && !isFormActive ? "cursor-cell z-0" : "cursor-auto z-0"
+          `${isEditionMode && !isFormActive ? 'cursor-cell' : 'cursor-auto'} z-0`
         }
       >
         <div
